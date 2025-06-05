@@ -83,12 +83,12 @@ public class TransactionRepository {
 
     // 删除交易
     @CacheEvict(value = "transactions", allEntries = true)
-    public void deleteById(UUID id) {
+    public void deleteById(String id) {
         transactions.remove(id);
     }
 
     // 检查交易是否存在
-    public boolean existsById(UUID id) {
+    public boolean existsById(String id) {
         return transactions.containsKey(id);
     }
 

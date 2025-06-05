@@ -1,12 +1,14 @@
 package com.wise.transdemo.base;
 
 import com.wise.transdemo.base.GlobalExceptionHandler;
+import com.wise.transdemo.enums.TransactionErrorCode;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -33,10 +35,22 @@ public class ValidationExceptionHandler extends GlobalExceptionHandler {
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
-        body.put("error", "Internal Server Error");
+        body.put("code", TransactionErrorCode.TRANSACTION_INVALIDATE_PARAM.getCode());
         body.put("message", errors);
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
+
+//    @ExceptionHandler(MissingServletRequestParameterException.class)
+//    public ResponseEntity<Object> handleValidationException(MissingServletRequestParameterException ex) {
+//        // 验证异常处理
+//
+//        Map<String, Object> body = new HashMap<>();
+//        body.put("timestamp", LocalDateTime.now());
+//        body.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+//        body.put("code", TransactionErrorCode.TRANSACTION_INVALIDATE_PARAM.getCode());
+//        body.put("message", ex.getMessage());
+//        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+//    }
 
 
 }
