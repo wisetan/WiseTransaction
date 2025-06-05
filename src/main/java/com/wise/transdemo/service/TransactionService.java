@@ -118,6 +118,14 @@ public class TransactionService {
         checkTransactionAccount(existingTransaction,accountNumber);
         transactionRepository.deleteById(id);
     }
+
+    public long getTotalTransactionsCountByAccount(String accountNumber) {
+        return transactionRepository.getCountByAccountNumber(accountNumber);
+    }
+
+    public long getTotalTransactionsCount() {
+        return transactionRepository.count();
+    }
 }
 
 

@@ -81,6 +81,10 @@ public class TransactionRepository {
                 .collect(Collectors.toList());
     }
 
+    public long getCountByAccountNumber(String accountNumber) {
+        return transactions.values().stream().filter(t -> t.getAccountNumber().equals(accountNumber)).count();
+    }
+
     // 删除交易
     @CacheEvict(value = "transactions", allEntries = true)
     public void deleteById(String id) {

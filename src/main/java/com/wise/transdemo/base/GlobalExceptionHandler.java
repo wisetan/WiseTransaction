@@ -29,23 +29,23 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleGeneralException(
             Exception ex, WebRequest request) {
 
-        Map<String, Object> body = new HashMap<>();
-        body.put("timestamp", LocalDateTime.now());
-        body.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
-        body.put("code", TransactionErrorCode.TRANSACTION_UNKNOWN_ERROR.getCode());
-        body.put("message", ex.getMessage());
+        LocalDateTime timestamp = LocalDateTime.now();
+        int status = HttpStatus.INTERNAL_SERVER_ERROR.value();
+        int code = TransactionErrorCode.TRANSACTION_UNKNOWN_ERROR.getCode();
+        String message = ex.getMessage();
 
         if (ex instanceof MissingServletRequestParameterException || ex instanceof MethodArgumentNotValidException || ex instanceof ConstraintViolationException) {
-            body.put("code", TransactionErrorCode.TRANSACTION_INVALIDATE_PARAM.getCode());
-        } else if(ex instanceof TransactionMissSignException) {
-            body.put("code", TransactionErrorCode.TRANSACTION_MISS_SIGN.getCode());
-        } else if(ex instanceof TransactionBlacklistedException) {
-            body.put("code", TransactionErrorCode.TRANSACTION_ACCOUNT_BLOCKED.getCode());
-        } else if(ex instanceof TransactionNotFoundException) {
-            body.put("code", TransactionErrorCode.TRANSACTION_RECORD_NOT_FOUND.getCode());
+            code = TransactionErrorCode.TRANSACTION_INVALIDATE_PARAM.getCode();
+        } else if (ex instanceof TransactionMissSignException) {
+            code = TransactionErrorCode.TRANSACTION_MISS_SIGN.getCode();
+        } else if (ex instanceof TransactionBlacklistedException) {
+            code = TransactionErrorCode.TRANSACTION_ACCOUNT_BLOCKED.getCode();
+        } else if (ex instanceof TransactionNotFoundException) {
+            code = TransactionErrorCode.TRANSACTION_RECORD_NOT_FOUND.getCode();
         }
 
-        return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
+        CommonResponse response = new CommonResponse(code, message,timestamp);
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
