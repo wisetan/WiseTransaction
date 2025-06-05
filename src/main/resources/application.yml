@@ -1,0 +1,33 @@
+server:
+  port: 8088 # 自定义端口，默认 8080
+  servlet:
+    context-path: /api
+  error:
+    whitelabel:
+      enabled: false
+
+
+spring:
+  application:
+    name: demo-app # 应用名称，用于注册中心、日志等标识
+  cache:
+    type: caffeine
+
+  devtools:
+    restart:
+      enabled: false
+
+logging:
+  level:
+    root: INFO
+    com.wise.transdemo: DEBUG # 指定包日志级别
+  file:
+    name: ./app.log # 日志输出到文件
+
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
