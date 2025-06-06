@@ -35,10 +35,6 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
 
-//    public TransactionController(TransactionService transactionService) {
-//        this.transactionService = transactionService;
-//    }
-
     // 创建交易
     @PostMapping
     @VerifySignature
