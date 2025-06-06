@@ -20,7 +20,7 @@ spring:
 logging:
   level:
     root: INFO
-    com.wise.transdemo: DEBUG # 指定包日志级别
+    com.wise.transdemo.aop: DEBUG # 指定包日志级别
   file:
     name: ./app.log # 日志输出到文件
 
