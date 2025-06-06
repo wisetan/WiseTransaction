@@ -45,23 +45,15 @@ public class TransactionRepository {
         });
     }
 
-
-
-    // 保存交易（添加/更新）
-    @CacheEvict(value = "transactions", allEntries = true)
     public Transaction save(Transaction transaction) {
         transactions.put(transaction.getId(), transaction);
         return transaction;
     }
 
-    // 根据ID获取交易
-    @Cacheable(value = "transactions", key = "#id")
     public Optional<Transaction> findById(String id) {
         return Optional.ofNullable(transactions.get(id));
     }
 
-    // 获取所有交易（支持分页）
-    @Cacheable(value = "transactions", key = "{#page, #size}")
     public List<Transaction> findAll(int page, int size) {
         return transactions.values().stream()
                 .sorted(Comparator.comparing(Transaction::getAccountNumber).reversed())
@@ -70,8 +62,6 @@ public class TransactionRepository {
                 .collect(Collectors.toList());
     }
 
-    // 根据账户号码获取交易
-    @Cacheable(value = "transactions", key = "{#accountNumber, #page, #size}")
     public List<Transaction> findByAccountNumber(String accountNumber, int page, int size) {
         return transactions.values().stream()
                 .filter(t -> t.getAccountNumber().equals(accountNumber))
@@ -85,8 +75,6 @@ public class TransactionRepository {
         return transactions.values().stream().filter(t -> t.getAccountNumber().equals(accountNumber)).count();
     }
 
-    // 删除交易
-    @CacheEvict(value = "transactions", allEntries = true)
     public void deleteById(String id) {
         transactions.remove(id);
     }
