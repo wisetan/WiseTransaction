@@ -44,12 +44,32 @@ public class Transaction {
     }
 
     public static Transaction create(String accountNumber, BigDecimal amount, TransactionType type) {
-        return new Transaction(
+        return create(
                 UUID.randomUUID().toString(),
                 accountNumber,
                 amount,
                 type,
                 LocalDateTime.now()
+        );
+    }
+
+    public static Transaction create(String id,String accountNumber, BigDecimal amount, TransactionType type) {
+        return new Transaction(
+                id,
+                accountNumber,
+                amount,
+                type,
+                LocalDateTime.now()
+        );
+    }
+
+    public static Transaction create(String id,String accountNumber, BigDecimal amount, TransactionType type,LocalDateTime timestamp) {
+        return new Transaction(
+                id,
+                accountNumber,
+                amount,
+                type,
+                timestamp
         );
     }
 

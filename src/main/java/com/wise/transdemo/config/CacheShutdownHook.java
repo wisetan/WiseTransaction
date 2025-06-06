@@ -1,4 +1,4 @@
-package com.wise.transdemo;
+package com.wise.transdemo.config;
 
 import com.wise.transdemo.repository.TransactionRepository;
 import org.springframework.beans.factory.DisposableBean;

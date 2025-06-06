@@ -1,5 +1,6 @@
 package com.wise.transdemo.base;
 
+import com.wise.transdemo.enums.TransactionErrorCode;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -26,7 +27,7 @@ public class ValidationParamExceptionHandler extends GlobalExceptionHandler{
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
-        body.put("error", ex.getMessage());
+        body.put("code", TransactionErrorCode.TRANSACTION_INVALIDATE_PARAM.getCode());
         body.put("message", ex.getMessage());
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }

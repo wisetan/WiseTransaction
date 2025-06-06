@@ -194,10 +194,6 @@ curl -X GET "http://localhost:8088/api/transactions/account/abc?page=0&size=10"
 
 请求参数：
 | 参数名 | 类型 | 是否必填 | 描述 |
-| ---- | ---- | ---- | ---- |
-| id | String | 是 | 交易记录号 |
-| accountNumber | String | 是 | 账户号码 |
-| amount | BigDecimal | 否 | 交易金额 |
 
 返回数据说明：
 返回更新后的交易记录详细信息。

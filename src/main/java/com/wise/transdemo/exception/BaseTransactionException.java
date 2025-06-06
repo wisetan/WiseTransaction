@@ -4,7 +4,7 @@ public class BaseTransactionException extends RuntimeException {
 
     private int errorCode;
     public BaseTransactionException(int errCode,String message ) {
-        super("Transaction Exception");
+        super(message);
         this.errorCode = errCode;
     }
 
