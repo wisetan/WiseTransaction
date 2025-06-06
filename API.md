@@ -46,7 +46,7 @@ timestamp	LocalDateTime	交易时间
 curl 命令示例：
 
 
-curl -X POST "http://localhost:8088/api/transactions?id=123&accountNumber=abc&amount=100.00&type=DEPOSIT&timestamp=2024-01-01 12:00:00&sign=xxxxxx"
+curl -X POST -d "id=b0d90d55-4d21-4d2f-9d54-6f7b6ec04dff&accountNumber=wise&amount=100.00&type=DEPOSIT&timestamp=2024-01-01 12:00:00&sign=xxxxxx" "http://127.0.0.1:8088/api/transactions"
 2. 获取单个交易
 
 接口地址：GET /api/transactions/{id}
