@@ -6,6 +6,7 @@ import com.wise.transdemo.exception.TransactionAccountInvalidateException;
 import com.wise.transdemo.exception.TransactionBlacklistedException;
 import com.wise.transdemo.exception.TransactionNotFoundException;
 import com.wise.transdemo.repository.TransactionRepository;
+import com.wise.transdemo.service.impl.TransactionLifeCycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class TransactionService {
+public class TransactionService implements TransactionLifeCycle {
     @Autowired
     private TransactionRepository transactionRepository;
 
@@ -49,10 +50,13 @@ public class TransactionService {
         if (type == TransactionType.WITHDRAW && amount.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Withdrawal amount must be positive");
         }
+        beginTransaction();
         Transaction transaction = Transaction.create(id, accountNumber, amount, type, timestamp);
         // 创建前 需要进行业务规则校验
         checkTransaction(transaction);
-        return transactionRepository.save(transaction);
+        Transaction result =  transactionRepository.save(transaction);
+        endTransaction();
+        return result;
     }
 
     private void checkTransaction(Transaction transaction) {
@@ -125,6 +129,16 @@ public class TransactionService {
 
     public long getTotalTransactionsCount() {
         return transactionRepository.count();
+    }
+
+    @Override
+    public void beginTransaction() {
+        //  开始交易动作前
+    }
+
+    @Override
+    public void endTransaction() {
+        // 结束交易动作后
     }
 }
 
